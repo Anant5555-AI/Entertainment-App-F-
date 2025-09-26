@@ -10,7 +10,7 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 const corsOptions = {
-  origin: 'http://localhost:5173', // frontend dev server
+  origin: 'https://entertainment-app-f-1.onrender.com', // frontend dev server
   credentials: true               // if  sending cookies/authorization
 };
 app.use(cors(corsOptions));
