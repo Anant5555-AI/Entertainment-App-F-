@@ -9,6 +9,11 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+const corsOptions = {
+  origin: 'http://localhost:5173', // frontend dev server
+  credentials: true               // if  sending cookies/authorization
+};
+app.use(cors(corsOptions));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
