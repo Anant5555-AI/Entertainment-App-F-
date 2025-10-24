@@ -9,27 +9,44 @@ import SingleMovie from './pages/SingleMovie';
 import AdminLogin from './pages/admin/AdminLogin';
 import CreateMovie from './pages/admin/CreateMovie';
 import SearchResults from './pages/SearchResults';
+import Dashboard from './pages/Dashboard';
+import AI from './components/AI';
+
+// Protected Route Component - checks auth on every render
+const ProtectedRoute = ({ children }) => {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  return isLoggedIn ? children : <Navigate to="/login" replace />;
+};
+
+// Admin Route Component - checks admin status on every render
+const AdminRoute = ({ children }) => {
+  const isAdmin = localStorage.getItem("isAdmin") === "true";
+  return isAdmin ? children : <Navigate to="/adminLogin" replace />;
+};
 
 const App = () => {
-
-  let isLoggedIn = localStorage.getItem("isLoggedIn");
-  let isAdmin = localStorage.getItem("isAdmin");
 
   return (
     <>
       <BrowserRouter>
+      <AI/>
         <Routes>
-          <Route path='/' element={isLoggedIn ? <Home /> : <Navigate to={"/login"}/>} />
+          {/* Public routes - accessible without login */}
+          <Route path='/' element={<Home />} />
           <Route path='/signUp' element={<SignUp />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/singleMovie/:movieId' element={isLoggedIn ? <SingleMovie /> : <Navigate to={"/login"}/>} />
-          <Route path='/search' element={isLoggedIn ? <SearchResults /> : <Navigate to={"/login"}/>} />
+          
+          {/* Protected routes - require login */}
+          <Route path='/dashboard' element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path='/singleMovie/:movieId' element={<ProtectedRoute><SingleMovie /></ProtectedRoute>} />
+          <Route path='/search' element={<ProtectedRoute><SearchResults /></ProtectedRoute>} />
 
           {/* Admin routes */}
           <Route path='/adminLogin' element={<AdminLogin />} />
-          <Route path='/createMovie' element={isAdmin ? <CreateMovie /> : <Navigate to="/adminLogin"/>} />
+          <Route path='/createMovie' element={<AdminRoute><CreateMovie /></AdminRoute>} />
           <Route path="*" element={<NoPage />} />
         </Routes>
+        
       </BrowserRouter>
     </>
   )
