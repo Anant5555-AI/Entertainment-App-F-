@@ -60,6 +60,12 @@ const Navbar = () => {
       return;
     }
 
+    // Check if user is logged in before searching
+    if (!isLoggedIn) {
+      navigate('/login');
+      return;
+    }
+
     // Navigate to search results page
     navigate(`/search?query=${encodeURIComponent(searchQuery)}`);
     setShowSearchResults(false);
@@ -112,8 +118,30 @@ const Navbar = () => {
                   Admin
                 </Link>
               )}
-              
-              <Avatar round="50%" className='cursor-pointer' name={data ? data.name : ""} size="40" />
+              {/* <Link 
+                to="/dashboard"
+                className='bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-200'
+              >
+                Dashboard
+              </Link> */}
+              {data?.profileImage ? (
+                <img
+                  src={`${api_base_url}/uploads/${data.profileImage}`}
+                  alt={data.name}
+                  className='w-10 h-10 rounded-full object-cover cursor-pointer hover:opacity-80 transition-opacity border-2 border-gray-600'
+                  onClick={() => navigate('/dashboard')}
+                  title="Go to Dashboard"
+                />
+              ) : (
+                <Avatar 
+                  round="50%" 
+                  className='cursor-pointer hover:opacity-80 transition-opacity' 
+                  name={data ? data.name : ""} 
+                  size="40" 
+                  onClick={() => navigate('/dashboard')}
+                  title="Go to Dashboard"
+                />
+              )}
               <button 
                 onClick={logout}
                 className='bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors duration-200'
@@ -125,10 +153,10 @@ const Navbar = () => {
             <div className='flex items-center gap-3'>
               <Link 
                 to="/adminLogin"
-                className='bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2'
+                className='bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2'
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
+                  <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
                 </svg>
                 Admin Login
               </Link>
