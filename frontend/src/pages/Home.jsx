@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
 import { useRef, useState } from 'react';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -37,12 +38,12 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <div className='px-[100px] mt-3'>
+      <div className='px-4 md:px-8 lg:px-[100px] mt-3'>
 
         <Swiper navigation={true} autoplay={{
           delay: 2500,
           disableOnInteraction: false,
-        }} modules={[Autoplay, Navigation]} className="mySwiper">
+        }} modules={[Autoplay, Navigation]} className="mySwiper animate-fadeIn">
           <SwiperSlide>
             <img src="https://image.api.playstation.com/vulcan/ap/rnd/202108/1609/rT4kNp9h3tQqvjTnQOT7MQJd.jpg" alt="" />
           </SwiperSlide>
@@ -50,17 +51,35 @@ const Home = () => {
             <img src="https://variety.com/wp-content/uploads/2014/04/01-avengers-2012.jpg" alt="" />
           </SwiperSlide>
           <SwiperSlide>
-            <img src="https://m.media-amazon.com/images/M/MV5BYmUyNzY2YWYtNWQ0My00ODMwLTkwOTQtOTA0ZjM0MjRmYjJiXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" alt=""  />
+            <img src="https://resizing.flixster.com/uaS9Buuct1GoHPTsNXIUBfvORbg=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzL2YzY2U4OWM5LWUyNTctNDJmMy1hYTc3LTAwMDY5NjU0N2VjZS5qcGc=" alt=""  />
           </SwiperSlide>
 
         </Swiper>
 
-        <div className='mb-10'>
-          <h3 className='text-2xl my-5'>Watch</h3>
+        <div className='mb-10 animate-fadeInUp'>
+          <h3 className='text-2xl my-5 animate-slideInLeft'>Watch</h3>
 
           <Swiper
-            slidesPerView={6}
-            spaceBetween={0}
+            slidesPerView={2}
+            spaceBetween={10}
+            breakpoints={{
+              640: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+              },
+              768: {
+                slidesPerView: 4,
+                spaceBetween: 10,
+              },
+              1024: {
+                slidesPerView: 5,
+                spaceBetween: 10,
+              },
+              1280: {
+                slidesPerView: 6,
+                spaceBetween: 10,
+              },
+            }}
             autoplay={{
               delay: 2500,
               disableOnInteraction: false,
@@ -69,7 +88,7 @@ const Home = () => {
               clickable: true,
             }}
             modules={[Autoplay, Pagination]}
-            className="!h-[40vh]"
+            className="!h-[30vh] md:!h-[35vh] lg:!h-[40vh]"
           >
             {
               data ? data.map((item, index) => {
@@ -112,6 +131,7 @@ const Home = () => {
 
         </div>
       </div>
+      <Footer />
     </>
   )
 }
