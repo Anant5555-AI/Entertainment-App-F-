@@ -97,7 +97,7 @@ const Navbar = () => {
               <input 
                 type="text" 
                 className='!rounded-[30px] !pl-[20px]' 
-                placeholder='Search Here... !' 
+                placeholder='Search..!' 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
