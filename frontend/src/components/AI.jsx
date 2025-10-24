@@ -41,7 +41,7 @@ const AI = () => {
       speak("Opening Login page");
     }
     else if (transcript.includes("open signup")) {
-      navigate("/signup");
+      navigate("/signUp");
       speak("Opening Signup page");
     }
     else if (transcript.includes("open admin login")) {
