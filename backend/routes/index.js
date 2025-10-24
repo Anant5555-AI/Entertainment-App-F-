@@ -222,35 +222,106 @@ router.post("/getUserDetails", async (req, res) => {
   };
 });
 
-router.post("/checkAdmin", async (req, res) => {
-  let { userId, email, password, key } = req.body;
-  let user = await userModel.findById(userId);
-  if (user) {
-    if (user.email === email) {
-      bcrypt.compare(password, user.password, function (err, isMatch) { // Renamed 'res' to 'isMatch'
-        if (err) throw err;
-        if (isMatch) {
-          if (key === "admin") {
-            return res.json({
-              success: true,
-              msg: "Admin is verified"
-            });
-          }
-          else {
-            return res.json({
-              success: false,
-              msg: "You are not an admin"
-            })
-          }
-        }
+// Upload profile image
+router.post("/uploadProfileImage", upload.single('profileImage'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.json({
+        success: false,
+        msg: "No image file provided"
       });
     }
-    else {
+
+    const { userId } = req.body;
+    
+    if (!userId) {
+      return res.json({
+        success: false,
+        msg: "User ID is required"
+      });
+    }
+
+    // Update user's profile image
+    const user = await userModel.findByIdAndUpdate(
+      userId,
+      { profileImage: req.file.filename },
+      { new: true }
+    );
+
+    if (user) {
+      return res.json({
+        success: true,
+        msg: "Profile image uploaded successfully",
+        profileImage: req.file.filename,
+        user: user
+      });
+    } else {
+      return res.json({
+        success: false,
+        msg: "User not found"
+      });
+    }
+  } catch (error) {
+    return res.json({
+      success: false,
+      msg: "Error uploading profile image",
+      error: error.message
+    });
+  }
+});
+
+router.post("/checkAdmin", async (req, res) => {
+  let { userId, email, password, key } = req.body;
+  
+  try {
+    let user = await userModel.findById(userId);
+    
+    if (!user) {
+      return res.json({
+        success: false,
+        msg: "User not found. Please login first."
+      });
+    }
+    
+    if (user.email !== email) {
       return res.json({
         success: false,
         msg: "Email is not correct"
-      })
+      });
     }
+    
+    bcrypt.compare(password, user.password, function (err, isMatch) {
+      if (err) {
+        return res.json({
+          success: false,
+          msg: "Error verifying password"
+        });
+      }
+      
+      if (!isMatch) {
+        return res.json({
+          success: false,
+          msg: "Password is incorrect"
+        });
+      }
+      
+      if (key === "admin") {
+        return res.json({
+          success: true,
+          msg: "Admin is verified"
+        });
+      } else {
+        return res.json({
+          success: false,
+          msg: "Invalid admin key"
+        });
+      }
+    });
+  } catch (error) {
+    return res.json({
+      success: false,
+      msg: "Server error occurred"
+    });
   }
 });
 
