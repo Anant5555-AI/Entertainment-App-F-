@@ -40,8 +40,23 @@ const Login = () => {
 
   return (
     <>
-      <div className="container w-screen min-h-screen flex flex-col items-center justify-center bg-[#09090B] text-white">
-        <div className="w-[23vw] bg-[#18181B] h-[auto] flex flex-col p-[20px] shadow-black/50 rounded-lg">
+      <div className="container w-screen min-h-screen flex flex-col items-center justify-center bg-[#09090B] text-white px-4">
+        <div className="w-full max-w-[90%] sm:max-w-md md:max-w-lg lg:max-w-xl xl:w-[23vw] bg-[#18181B] h-[auto] flex flex-col p-6 md:p-8 shadow-black/50 rounded-lg animate-fadeInUp">
+          <style jsx>{`
+            @keyframes fadeInUp {
+              from {
+                opacity: 0;
+                transform: translateY(30px);
+              }
+              to {
+                opacity: 1;
+                transform: translateY(0);
+              }
+            }
+            .animate-fadeInUp {
+              animation: fadeInUp 0.6s ease-out;
+            }
+          `}</style>
           <h3 className='text-2xl mb-3'>Login</h3>
           <form onSubmit={handleSubmit}>
            
@@ -54,7 +69,8 @@ const Login = () => {
             </div>
 
             <p className='mb-1 mt-2 text-[14px]'>Don't have an account <Link className='text-[#1D4ED8]' to="/signUp">Sign Up</Link></p>
-            <p className='mb-3 text-red-500'>{error}</p>
+            
+            <p className='mb-1 mt-2 text-[14px]'>Is Admin? <Link className='text-[#1D4ED8]' to="/AdminLogin">Admin Login</Link></p><p className='mb-3 text-red-500'>{error}</p>
         
            <button className='btnBlue w-full text-[15px]'>Login</button>
           </form>
