@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { api_base_url } from '../helper';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const SearchResults = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
+  const [searchInput, setSearchInput] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -16,10 +19,10 @@ const SearchResults = () => {
     
     if (searchQuery) {
       setQuery(searchQuery);
+      setSearchInput(searchQuery);
       performSearch(searchQuery);
     } else {
       setLoading(false);
-      setError("No search query provided");
     }
   }, [location.search]);
 
@@ -54,6 +57,13 @@ const SearchResults = () => {
     navigate('/');
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchInput.trim()) {
+      navigate(`/search?query=${encodeURIComponent(searchInput)}`);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-900 flex items-center justify-center">
@@ -66,23 +76,37 @@ const SearchResults = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 py-8">
-      <div className="container mx-auto px-4">
-        {/* Header */}
-        <div className="mb-8">
-          <button 
-            onClick={handleBackToHome}
-            className="text-blue-400 hover:text-blue-300 mb-4 flex items-center gap-2"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
-            </svg>
-            Back to Home
-          </button>
-          
-          <h1 className="text-3xl font-bold text-white mb-2">
-            Search Results for "{query}"
-          </h1>
+    <>
+      <Navbar />
+      <div className="min-h-screen px-4 md:px-8 lg:px-[100px] py-8">
+        <div className="container mx-auto">
+          {/* Header */}
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-white mb-4">
+              {query ? `Search Results for "${query}"` : 'Search Movies'}
+            </h1>
+            
+            {/* Search Input */}
+            <form onSubmit={handleSearch} className="mb-6">
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
+                  placeholder="Search for movies..."
+                  className="flex-1 px-4 py-3 bg-[#18181B] border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
+                />
+                <button
+                  type="submit"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                  Search
+                </button>
+              </div>
+            </form>
           
           {error && (
             <div className="text-red-400 bg-red-900/20 p-4 rounded-lg">
@@ -99,7 +123,7 @@ const SearchResults = () => {
 
         {/* Results Grid */}
         {searchResults.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-4 lg:gap-6">
             {searchResults.map((movie) => (
               <div 
                 key={movie._id}
@@ -162,8 +186,10 @@ const SearchResults = () => {
             </div>
           )
         )}
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 
