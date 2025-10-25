@@ -45,15 +45,23 @@ const Home = () => {
           disableOnInteraction: false,
         }} modules={[Autoplay, Navigation]} className="mySwiper animate-fadeIn">
           <SwiperSlide>
+            <Link to='/singleMovie/68d68d01aac149a29402b897'>
             <img src="https://image.api.playstation.com/vulcan/ap/rnd/202108/1609/rT4kNp9h3tQqvjTnQOT7MQJd.jpg" alt="" />
+            </Link>
           </SwiperSlide>
           <SwiperSlide>
+            <Link to='/singleMovie/68d06fea7676e81b611a694a'>
             <img src="https://variety.com/wp-content/uploads/2014/04/01-avengers-2012.jpg" alt="" />
+            </Link>
           </SwiperSlide>
+          
           <SwiperSlide>
-            <img src="https://resizing.flixster.com/uaS9Buuct1GoHPTsNXIUBfvORbg=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzL2YzY2U4OWM5LWUyNTctNDJmMy1hYTc3LTAwMDY5NjU0N2VjZS5qcGc=" alt=""  />
-          </SwiperSlide>
-
+             <Link to='/singleMovie/68d68d88aac149a29402b8a9'>
+            <img src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/202508/mahavatar-narsimha-review-emotionally-uplifting-tale-about-devotion-and-compassion-255245433-1x1.jpg?VersionId=0fPHOYCoWoeKrtFHpPlK77ETVt7m7V5S" alt=""  />
+         
+         </Link>
+         </SwiperSlide>
+              
         </Swiper>
 
         <div className='mb-10 animate-fadeInUp'>
