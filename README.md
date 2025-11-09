@@ -61,9 +61,7 @@ npm start
 
 
 🖼️ Screenshots
-Home	Voice Routing	Admin Panel
 
-(Add images to /screenshots folder before pushing to GitHub)
 
 📂 Folder Structure
 pgsql
