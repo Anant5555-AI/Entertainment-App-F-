@@ -61,9 +61,9 @@ npm start
 
 
 🖼️ Screenshots
-<img width="1858" height="880" alt="read" src="https://github.com/user-attachments/assets/c92730da-c911-41af-884c-4152ec2a1d89" />
+![Voice](./voice.png)
 
-<img width="1912" height="973" alt="voice" src="https://github.com/user-attachments/assets/e5772124-a3dc-4eca-aee6-a543c3969892" />
+![read](./read.png)
 
 📂 Folder Structure
 pgsql
