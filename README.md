@@ -61,9 +61,9 @@ npm start
 
 
 🖼️ Screenshots
-![Voice](voice.png)
+![Voice](./voice.png)
+![Read](./read.png)
 
-![read](read.png)
 
 📂 Folder Structure
 pgsql
