@@ -54,15 +54,11 @@ The **Entertainment App** is a dynamic, full-stack project built to showcase a m
 Clone and set up the project:
 
 ```bash
-git clone https://github.com/Anant5555-AI/Entertainment-App.git
+git clone https://github.com/Anant5555-AI/Entertainment-App-F-
 cd Entertainment-App
 npm install
 npm start
 
-
-🖼️ Screenshots
-![Voice](./voice.png)
-![Read](./read.png)
 
 
 📂 Folder Structure
